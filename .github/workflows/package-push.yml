@@ -1,0 +1,47 @@
+---
+# yamllint disable rule:line-length
+name: Package Push
+
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: read-all
+
+jobs:
+  package:
+    permissions:
+      id-token: write
+      contents: write
+    name: Package Push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lazy action steps
+        id: lazy-action
+        uses: variant-inc/actions-go@v1
+
+      - name: Build Code
+        run: |
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/go-version-select
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::064859874041:role/ops-github-runner
+          aws-region: us-east-2
+
+      - name: S3 Push Package
+        shell: pwsh
+        run: |
+          $branchName = "${{ github.ref }}" -replace '^refs/heads/', ''
+          .github/scripts/s3PushPackage.ps1 -BranchName $branchName
+
+      - name: Create Release Action
+        uses: variant-inc/actions-collection/create-release-tag@v2
