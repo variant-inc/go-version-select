@@ -31,7 +31,7 @@ jobs:
         run: |
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/go-version-select
 
-      - name: Create Release Action
+      - name: Package Push to S3
         uses: variant-inc/actions-collection/s3-package-push@feature/s3-package-push
         with:
           package_path: build/go-version-select
