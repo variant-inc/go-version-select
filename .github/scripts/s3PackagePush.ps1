@@ -31,6 +31,11 @@ Compress-Archive -Path $SourcePackage -DestinationPath $ZipPackage
 Write-Host "Uploading $ZipPackage to s3://$S3Bucket/$S3Key"
 aws s3 cp $ZipPackage "s3://$S3Bucket/$S3Key"
 
+if ($LASTEXITCODE -ne 0) {
+  Write-Host "Copy failed to s3://$S3Bucket/$S3Key"
+  exit 1
+}
+
 Write-Host "Upload complete to s3://$S3Bucket/$S3Key"
 
 Add-Content -Path ${env:GITHUB_STEP_SUMMARY} `
