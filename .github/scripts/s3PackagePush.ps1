@@ -4,7 +4,7 @@ $ErrorActionPreference = "Stop"
 $SourcePackage = "build/go-version-select"
 $ZipPackage = "build/go-version-select.zip"
 
-$S3Bucket = $env:CLI_S3_BUCKET
+$S3Bucket = $env:GO_CLI_S3_BUCKET
 
 $Version = $env:IMAGE_VERSION
 if (-not $Version) {
@@ -36,7 +36,7 @@ Write-Host "Upload complete to s3://$S3Bucket/$S3Key"
 Add-Content -Path ${env:GITHUB_STEP_SUMMARY} `
   -Encoding utf8 `
   -Value "## Uploaded Package"
-  
+
 Add-Content -Path ${env:GITHUB_STEP_SUMMARY} `
   -Encoding utf8 `
   -Value "s3://$S3Bucket/$S3Key"

@@ -10,7 +10,7 @@ import (
 )
 
 // ProcessVersions filters and selects the newest version based on the given constraint.
-func ProcessVersions(ctx context.Context, versionList string, constraint string) (string, error) {
+func ProcessVersions(_ context.Context, versionList, constraint string) (string, error) {
 	versionStrings := strings.Split(versionList, ",")
 	var available versions.List
 	for _, v := range versionStrings {

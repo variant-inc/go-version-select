@@ -3,9 +3,8 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"os"
-
 	"go-version-select/internal/handlers"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -14,14 +13,23 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "go-version-select",
 	Short: "Selects the latest version matching a given constraint",
-	Long: `go-version-select is a command-line tool that helps you determine the latest version 
-that satisfies a specified version constraint. 
+	Long: `go-version-select is a command-line tool that helps you determine the latest version
+that satisfies a specified version constraint.
 
-You provide a list of available versions and a constraint (e.g., "^1.0.0"), 
+You provide a list of available versions and a constraint (e.g., "^1.0.0"),
 and the tool selects the most recent compatible version.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		versionList, _ := cmd.Flags().GetString("versions")
-		constraint, _ := cmd.Flags().GetString("constraint")
+	Run: func(cmd *cobra.Command, _ []string) {
+		versionList, err := cmd.Flags().GetString("versions")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, fmt.Sprintf("error occurred while handling versions flag %+v", err))
+			os.Exit(1)
+		}
+
+		constraint, err := cmd.Flags().GetString("constraint")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, fmt.Sprintf("error occurred while handling constraint flag %+v", err))
+			os.Exit(1)
+		}
 
 		if versionList == "" || constraint == "" {
 			fmt.Fprintf(os.Stderr, "Both --versions and --constraint flags are required")
