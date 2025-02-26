@@ -17,8 +17,8 @@ permissions: read-all
 
 jobs:
   package:
-    # permissions:
-    #   id-token: write
+    permissions:
+      id-token: write
     #   contents: read
     name: Package Push
     runs-on: ubuntu-latest
