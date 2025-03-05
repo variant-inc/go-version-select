@@ -35,16 +35,76 @@ go-versions-select --versions "1.0.0,1.5.6,2.0.0" --constraint ">=1.0.0"
 - `--versions` (required): A comma-separated list of versions.
 - `--constraint` (required): A constraint string that defines the filtering rule.
 
-### Example
+### Examples
 
-#### Input
+#### Example 1: Selecting the highest version that meets the constraint
 
 ```sh
 go-versions-select --versions "1.0.0,1.5.6,2.0.0" --constraint ">=1.5.0"
 ```
 
-#### Output
+**Output:**
 
 ```txt
 2.0.0
+```
+
+#### Example 2: Selecting a version GreaterThanOrEqualPatchOnly
+
+```sh
+go-versions-select --versions "1.0.0,1.0.4,1.5.6,2.0.0" --constraint "~1.0.0"
+```
+
+**Output:**
+
+```txt
+1.0.4
+```
+
+#### Example 3: Selecting a version GreaterThanOrEqualMinorOnly
+
+```sh
+go-versions-select --versions "1.0.0,1.0.4,1.5.6,2.0.0" --constraint "~1"
+```
+
+**Output:**
+
+```txt
+1.5.6
+```
+
+#### Example 4: Selecting the exact version if available
+
+```sh
+go-versions-select --versions "1.0.0,1.5.6,2.0.0" --constraint "=1.5.6"
+```
+
+**Output:**
+
+```txt
+1.5.6
+```
+
+#### Example 5: Selecting the latest matching version with multiple constraint
+
+```sh
+go-versions-select --versions "1.0.0,1.0.4,1.5.6,2.0.0" --constraint "~1 <=1.0.4 <=1.0.0"
+```
+
+**Output:**
+
+```txt
+1.0.0
+```
+
+#### Example 6: No matching version found
+
+```sh
+go-versions-select --versions "1.0.0,1.5.6,2.0.0" --constraint ">=1.0.0 >2.0.0"
+```
+
+**Output:**
+
+```txt
+No matching version found
 ```

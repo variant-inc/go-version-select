@@ -45,6 +45,5 @@ go.work
 lint.txt
 docs
 
-# OTEL log ignore
-telemetry/log.json
+# build dir
 build
