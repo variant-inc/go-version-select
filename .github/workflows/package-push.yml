@@ -19,7 +19,7 @@ jobs:
   package:
     permissions:
       id-token: write
-    #   contents: read
+      contents: write
     name: Package Push
     runs-on: ubuntu-latest
     steps:
