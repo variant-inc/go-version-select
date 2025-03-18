@@ -28,6 +28,15 @@ jobs:
           mkdir -p "$HOME/.local/bin"
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
+          # Install ShellCheck
+          sudo apt install shellcheck
+
+          # Install shfmt
+          SHFFMT_VERSION="$(curl -sfSL https://api.github.com/repos/mvdan/sh/releases/latest | jq -r '.tag_name')"
+          curl -sfSLo ./shfmt "https://github.com/mvdan/sh/releases/download/$SHFFMT_VERSION/shfmt_${SHFFMT_VERSION}_$(uname)_amd64"
+          chmod +x shfmt
+          mv shfmt $HOME/.local/bin/
+
           # Install golangci-lint
           go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
       - uses: pre-commit/action@v3.0.1

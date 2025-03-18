@@ -1,0 +1,33 @@
+---
+# yamllint disable rule:line-length
+name: Go Version Select Action
+description: |
+  GitHub Action to download and set up Go CLI based on specified version.
+
+  ## Usage
+
+  Add this action to your GitHub Actions workflow to set up Go CLI with a specified version.
+
+  ```yaml
+  - name: Go Version Select
+    uses: variant-inc/go-version-select@v1
+  ```
+inputs:
+  go_cli_version:
+    description: |
+      Go CLI package version.
+      Defaults to latest release version. Can be overridden by specifying an exact version.
+runs:
+  using: composite
+  steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::064859874041:role/ops-github-runner
+        aws-region: us-east-2
+    - name: Download Go CLI
+      shell: bash
+      run: ${{ github.action_path }}/download.sh
+      env:
+        GO_CLI_VERSION: ${{ inputs.go_cli_version }}
+        CONFIG_FILE_PATH: ${{ github.action_path }}/config.yml
