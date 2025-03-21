@@ -38,5 +38,36 @@ jobs:
           s3_bucket: ${{ env.GO_CLI_S3_BUCKET }}
           package_name: go-version-select
 
+      - name: Decode gpg private key
+        if: github.ref == 'refs/heads/master'
+        run: |
+          GPG_PRIVATE_KEY=$(echo -n ${{ env.GPG_PRIVATE_KEY_BASE64 }} | base64 -d )
+          echo "::add-mask::$GPG_PRIVATE_KEY"
+          {
+            echo 'GPG_PRIVATE_KEY<<EOF'
+            echo "$GPG_PRIVATE_KEY"
+            echo EOF
+          } >> "$GITHUB_ENV"
+
+      - name: Import GPG key
+        if: github.ref == 'refs/heads/master'
+        id: import-gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ env.GPG_PRIVATE_KEY }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Update version in config
+        if: github.ref == 'refs/heads/master'
+        run: |
+          set -ex
+          git config --global user.email "${{ steps.import-gpg.outputs.email }}"
+          git config --global user.name "${{ steps.import-gpg.outputs.name }}"
+          echo "$(yq '.version = "'$IMAGE_VERSION'"' config.yml)" > config.yml
+          git add config.yml
+          git commit -m "Update CLI version $IMAGE_VERSION [skip ci]"
+          git push
+
       - name: Create Release Action
         uses: variant-inc/actions-collection/create-release-tag@v2
