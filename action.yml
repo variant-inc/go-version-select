@@ -13,7 +13,7 @@ description: |
     uses: variant-inc/go-version-select@v1
   ```
 inputs:
-  go_cli_version:
+  go-cli-version:
     description: |
       Go CLI package version.
       Defaults to latest release version. Can be overridden by specifying an exact version.
@@ -29,5 +29,5 @@ runs:
       shell: bash
       run: ${{ github.action_path }}/download.sh
       env:
-        GO_CLI_VERSION: ${{ inputs.go_cli_version }}
+        GO_CLI_VERSION: ${{ inputs.go-cli-version }}
         CONFIG_FILE_PATH: ${{ github.action_path }}/config.yml
