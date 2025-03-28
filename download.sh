@@ -9,9 +9,9 @@ if [ -z "$GO_CLI_VERSION" ]; then
 	GO_CLI_VERSION=$(yq '.version' "$CONFIG_FILE_PATH")
 fi
 
-s3Bucket="$GO_CLI_S3_BUCKET"
+s3Bucket="$DX_PACKAGES_S3_BUCKET"
 filename="go-version-select.${GO_CLI_VERSION}.zip"
-prefix="$GO_CLI_RELEASE/go-version-select/$filename"
+prefix="go-version-select/$filename"
 localDir="/tmp/go-version-download"
 
 aws s3 cp "s3://$s3Bucket/$prefix" "$localDir/" --force
