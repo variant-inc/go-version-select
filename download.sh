@@ -14,7 +14,7 @@ filename="go-version-select.${GO_CLI_VERSION}.zip"
 prefix="go-version-select/$filename"
 localDir="/tmp/go-version-download"
 
-aws s3 cp "s3://$s3Bucket/$prefix" "$localDir/" --force
+aws s3 cp "s3://$s3Bucket/$prefix" "$localDir/" --force --debug
 
 # Unzip the file
 unzip -o "$localDir/$filename" -d "$localDir"
