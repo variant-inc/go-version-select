@@ -32,7 +32,7 @@ jobs:
           CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/go-version-select
 
       - name: Package Push to S3
-        uses: variant-inc/actions-collection/s3-package-push@feature/move-packages-s3
+        uses: variant-inc/actions-collection/s3-package-push@v2
         with:
           package_path: build/go-version-select
           s3_bucket: ${{ env.DX_PACKAGES_S3_BUCKET }}
