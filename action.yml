@@ -23,8 +23,9 @@ runs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
-        role-to-assume: arn:aws:iam::064859874041:role/ops-github-runner
+        role-to-assume: arn:aws:iam::108141096600:role/ops-github-runner
         aws-region: us-east-2
+
     - name: Download Go CLI
       shell: bash
       run: ${{ github.action_path }}/download.sh
