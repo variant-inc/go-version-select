@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/golangci/golangci-lint
-    rev: v1.64.5
+    rev: v2.3.0
     hooks:
       - id: golangci-lint-config-verify
       - id: golangci-lint-full
@@ -11,7 +11,7 @@ repos:
       - id: shellcheck
       - id: shfmt
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.44.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint-fix
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -29,18 +29,18 @@ repos:
         args:
           - --autofix
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.44.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint
   - repo: https://github.com/google/yamlfmt
-    rev: v0.16.0
+    rev: v0.17.2
     hooks:
       - id: yamlfmt
         args:
           - -formatter
           - "include_document_start=true,retain_line_breaks=true"
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
+    rev: v1.37.1
     hooks:
       - id: yamllint
         args: [--format, parsable, --strict]
