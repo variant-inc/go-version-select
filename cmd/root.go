@@ -21,13 +21,13 @@ and the tool selects the most recent compatible version.`,
 	Run: func(cmd *cobra.Command, _ []string) {
 		versionList, err := cmd.Flags().GetString("versions")
 		if err != nil {
-			fmt.Fprintf(os.Stderr, fmt.Sprintf("error occurred while handling versions flag %+v", err))
+			fmt.Fprintf(os.Stderr, "error occurred while handling versions flag %+v\n", err)
 			os.Exit(1)
 		}
 
 		constraint, err := cmd.Flags().GetString("constraint")
 		if err != nil {
-			fmt.Fprintf(os.Stderr, fmt.Sprintf("error occurred while handling constraint flag %+v", err))
+			fmt.Fprintf(os.Stderr, "error occurred while handling constraint flag %+v\n", err)
 			os.Exit(1)
 		}
 
