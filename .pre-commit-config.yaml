@@ -33,9 +33,10 @@ repos:
     hooks:
       - id: markdownlint
   - repo: https://github.com/google/yamlfmt
-    rev: v0.17.2
+    rev: v0.18.0
     hooks:
       - id: yamlfmt
+        files: \.(yaml|yml)$
         args:
           - -formatter
           - "include_document_start=true,retain_line_breaks=true"
