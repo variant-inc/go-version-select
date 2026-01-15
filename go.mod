@@ -2,7 +2,7 @@ module go-version-select
 
 go 1.25
 
-toolchain go1.25.5
+toolchain go1.25.6
 
 require (
 	github.com/apparentlymart/go-versions v1.0.3
