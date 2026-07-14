@@ -2,7 +2,7 @@ module go-version-select
 
 go 1.25
 
-toolchain go1.26.2
+toolchain go1.26.5
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0
